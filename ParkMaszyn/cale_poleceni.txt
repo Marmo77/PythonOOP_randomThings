@@ -1,0 +1,142 @@
+ZADANIE — wersja opisowa (bez nazw metod, bez gotowych sygnatur)
+Fabuła
+
+Pracujesz jako programista w firmie prowadzącej warsztat przemysłowy „Park Maszyn”. Masz przygotować system, który pozwala przedstawiać różne rodzaje maszyn, symulować ich pracę, sprawdzać czy wymagają konserwacji, a także nimi zarządzać.
+
+Twoim celem jest stworzenie trzech głównych klas:
+
+1. Klasa reprezentująca dowolną maszynę (Machine)
+
+Obiekt tej klasy ma przedstawiać pojedynczą maszynę przemysłową.
+
+Powinna ona zawierać:
+
+Co przechowuje?
+
+unikalny identyfikator maszyny,
+
+nazwę lub model,
+
+licznik przepracowanych godzin,
+
+informację kiedy ostatnio wykonano konserwację,
+
+aktualny stan pracy (np. czy jest uruchomiona czy zatrzymana — możesz zrobić to jako ukryty/prywatny atrybut).
+
+Dodatkowo istnieje wspólna wartość dla całej klasy, określająca po ilu godzinach pracy maszyna powinna zostać poddana konserwacji (stała liczba — próg).
+
+Co potrafi?
+
+może zostać uruchomiona,
+
+może zostać zatrzymana,
+
+może wykonywać pracę przez określoną liczbę godzin (zwiększa to czas pracy),
+
+potrafi określić, czy wymaga konserwacji (porównanie przepracowanych godzin od ostatniej konserwacji z progiem),
+
+potrafi przeprowadzić konserwację (ustawia czas ostatniej konserwacji na obecny czas pracy, ale nie wolno robić konserwacji jeśli maszyna jest w trakcie pracy),
+
+potrafi tworzyć obiekt na podstawie danych słownikowych (np. z pliku lub JSON).
+
+2. Dwie klasy dziedziczące po Machine
+
+Masz utworzyć co najmniej dwa różne typy maszyn, np.:
+
+tokarka,
+
+szlifierka.
+
+Co mają zawierać?
+
+każdy typ maszyny ma mieć jakiś dodatkowy parametr charakterystyczny (np. poziom precyzji, rozmiar tarczy, moc itp.),
+
+mogą zmieniać próg konserwacji w porównaniu z maszyną podstawową (np. tokarka wymaga częstszej konserwacji, szlifierka — rzadziej),
+
+powinny w pełni współpracować z systemem tak jak podstawowa klasa.
+
+Czyli w skrócie: rozszerzenie funkcjonalności, nie przebudowa.
+
+3. Klasa zarządzająca całym warsztatem (Workshop)
+
+Ta klasa ma zarządzać kolekcją maszyn.
+
+Co przechowuje?
+
+listę obiektów maszyn (różnych typów).
+
+Co potrafi?
+
+dodawać nowe maszyny do kolekcji,
+
+usuwać maszyny na podstawie ich identyfikatora,
+
+zwracać listę wszystkich maszyn,
+
+wyszukiwać maszyny, które wymagają konserwacji,
+
+wykonywać konserwację wszystkich, które jej wymagają (np. zwraca listę identyfikatorów maszyn, na których wykonano konserwację),
+
+wyliczać sumaryczny czas pracy wszystkich maszyn razem.
+
+Dodatkowe oczekiwania
+
+Podczas pisania rozwiązania masz użyć:
+
+konstruktora,
+
+pól instancji,
+
+pól klasowych,
+
+dziedziczenia,
+
+właściwości (properties) — np. do odczytu czasu pracy,
+
+wyjątków (gdy wykonanie operacji jest niemożliwe),
+
+list comprehensions w klasie warsztatu,
+
+przejrzystej reprezentacji tekstowej obiektów (np. __repr__ lub __str__).
+
+Część demonstracyjna (test działania)
+
+Po napisaniu wszystkich klas wykonaj samodzielnie krótki scenariusz testowy:
+
+Utwórz warsztat.
+
+Dodaj do niego:
+
+tokarkę z czasem pracy zbliżonym do limitu,
+
+szlifierkę z mniejszym przebiegiem,
+
+jedną maszynę podstawową, która przekroczyła limit.
+
+Uruchom kilka z nich i „przepracuj” parę godzin.
+
+Wypisz stan wszystkich maszyn przed konserwacją.
+
+Pokaż, które wymagają konserwacji.
+
+Wykonaj konserwację.
+
+Wypisz stan po konserwacji.
+
+Oczekiwany wynik końcowy
+
+Twój program powinien wypisać rezultat podobny (w sensie informacji, nie koniecznie identycznego formatowania):
+
+=== Status przed konserwacją ===
+- Tokarka L-100: przepracowane 105h, ostatnia konserwacja 0h → wymaga konserwacji
+- Szlifierka G-200: przepracowane 70h, ostatnia konserwacja 0h → nie wymaga
+- Maszyna C-10: przepracowane 120h, ostatnia konserwacja 0h → wymaga
+
+Maszyny do konserwacji: L-100, C-10
+
+Wykonano konserwacje dla: L-100, C-10
+
+=== Status po konserwacji ===
+- Tokarka L-100: przepracowane 105h, ostatnia konserwacja 105h → OK
+- Szlifierka G-200: przepracowane 70h, ostatnia konserwacja 0h → OK
+- Maszyna C-10: przepracowane 120h, ostatnia konserwacja 120h → OK
