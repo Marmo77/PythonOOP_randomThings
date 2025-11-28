@@ -133,18 +133,30 @@ tokarka.start(), szlifierka.start()
 tokarka.operate(10), szlifierka.operate(15)
 szlifierka.stop, tokarka.stop()
 
+time.sleep(1)
 print("--- Przed konserwacją ---")
 for m in warsztat.list_machines():
     print(f"- {m.id} ({m.model}): runtime={m.runtime:.1f}, last_maint={m.last_maintance} needs={m.needs_maintance()}")
 
 print("MASZYNY DO KONSERWACJI: ")
+time.sleep(1)
 need_meint =[]
 for m in warsztat.list_machines():
     if m.needs_maintance():
         need_meint.append(f"({m.id}, {m.model})")
 print(", ".join(str(m) for m in need_meint))
 
-
-print("WYKONANO KONSERWACJE DLA:")
+print("Konserwowanie...")
+time.sleep(1)
+mentained = []
 for m in warsztat.machines_needing_maintenance():
-    print(m)
+    print(f"*Zatrzymano prace {m.id}*")
+    m.stop()
+    m.perform_maintance()
+    mentained.append(f"({m.id}, {m.model})")
+print("WYKONANO KONSERWACJE DLA:")
+print(", ".join(str(m) for m in mentained))
+
+print("--- Status po konserwacji ---")
+for m in warsztat.list_machines():
+    print(f"- ({m.id} - {m.model}) runtime={m.runtime} last_maint={m.last_maintance} {"NIE OK" if m.needs_maintance() else "OK"}")
