@@ -13,6 +13,7 @@ W grze mamy trzy typy zawodników:
 - **Pilkarz** - podstawowy zawodnik z umiejętnościami
 - **Bramkarz** - ma dodatkową statystykę "refleks"
 - **Napastnik** - ma dodatkową statystykę "wykończenie"
+  _(refleks i wykonczenie) akutalnie nic nie wnoszą do gry_
 
 Każdy zawodnik posiada:
 
@@ -29,7 +30,7 @@ Przed każdym meczem losowo sprawdzane są kontuzje. Im wyższa umiejętność z
 
 <div align="center">
   <img src="screen1.jpg" alt="Kontuzje i zawodnicy Barcy" width="600">
-  <p><em>Ekran 1: System kontuzji - niektórzy zawodnicy zostali kontuzjowani, a następnie wyświetlana jest lista zawodników drużyny Barca z ich statystykami</em></p>
+  <p><em>Screen 1: System kontuzji - niektórzy zawodnicy zostali kontuzjowani, a następnie wyświetlana jest lista zawodników drużyny Barca z ich statystykami</em></p>
 </div>
 
 ### 3. Drużyny
@@ -43,7 +44,7 @@ Każda drużyna ma pełny skład 11 graczy.
 
 <div align="center">
   <img src="screen2.jpg" alt="Drużyna Messiara" width="600">
-  <p><em>Ekran 2: Pełna lista zawodników drużyny Messiara ze wszystkimi statystykami</em></p>
+  <p><em>Screen 2: Pełna lista zawodników drużyny Messiara ze wszystkimi statystykami</em></p>
 </div>
 
 ### 4. Gotowość do Meczu
@@ -57,7 +58,7 @@ Program automatycznie wybiera tylko tych zawodników, którzy są w dobrej kondy
 
 <div align="center">
   <img src="screen3.jpg" alt="Gotowi zawodnicy i wynik meczu" width="600">
-  <p><em>Ekran 3: Lista zawodników gotowych do gry z obu drużyn oraz wynik rozgrywanego meczu</em></p>
+  <p><em>Screen 3: Lista zawodników gotowych do gry z obu drużyn oraz wynik rozgrywanego meczu</em></p>
 </div>
 
 ### 5. Rozgrywka Meczu
@@ -115,15 +116,27 @@ Jeśli uczysz się Pythona, w tym kodzie zobaczysz:
 - **Funkcje/Metody** - organizacja kodu w logiczne bloki
 - **Losowość** - `random` do symulacji kontuzji
 
-## 💡 Możliwe Rozszerzenia
+## 💡 Rozszerzenia
 
-Chcesz rozbudować grę? Możesz dodać:
+Aplikacja nie wykorzystuje niektórych funkcji które są stworzone
+_(możesz je wykorzystać we własnym rozsrzeniu tego projektu)_
 
-- System treningów zwiększających umiejętności
+- Pilkarz.podnies_umiejetniosc() _losowo podnosci umiejetnosc zawodnika od (1-5)_
+- Pilkarz.wycieczenie(val) \*dodaje/zmniejsza zmeczenie zawodnika zalezy od **val\***
+- refleks czy wykonczenie nic nie wnoszą do punktacji _(możesz to zmienić i dodać zależności)_
+- Druzyna - Stworzone są metody do zarządzania drużyną - _nie wykorzystywane_
+- dodaj_zawodnika(zawodnik)
+- usun_zawodnika(identyfikator _imie lub numer_)
+- znajdz_zawodnika(identyfikator _imie lub numer_)
+
+Dodatkowo możesz samemu rozbudować np:
+
 - Transfery zawodników między drużynami
 - Ligę z wieloma meczami i tabelą
 - System finansów klubu
 - Strategie meczowe (defensywna/ofensywna)
+- Na bazie strategii inaczej przypisywane punkty
+- Rozwiniety system punktacji
 - Zapisywanie wyników do pliku
 
 ## 👨‍💻 Dla Początkujących

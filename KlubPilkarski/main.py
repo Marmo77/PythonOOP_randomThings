@@ -3,7 +3,7 @@ import random
 
 class Pilkarz:
 
-    __kontuzjowany: bool = False
+    __kontuzjowany: bool = False # __ oznacza prywatne
 
     def __init__(self, imie: str, pozycja: str, numer: int, umiejetnosc:int, zmeczenie: int= 0) -> None:
         self.imie = imie
@@ -20,7 +20,7 @@ class Pilkarz:
             self.umiejetnosc = 100
         print(f"{self.imie} ma teraz {self.umiejetnosc}")
 
-    def wycieczenie(self, zmeczenie):
+    def wycieczenie(self, zmeczenie: int): #zmeczenie jest int czyli liczba dodatnia lub ujemna np: -15 lub 25
         # dodanie zmeczenia
         self.zmeczenie += zmeczenie
 
@@ -30,13 +30,13 @@ class Pilkarz:
             self.zmeczenie = 0
         print(f"{self.imie} zmęczneie teraz wynosi: {self.zmeczenie}")
 
-    def zawodnik(self):
+    def zawodnik(self): #printuje zawodnika i jego statystyki
         print("------- ZAWODNIK -------")
         print(f"Imię: {self.imie}")
         print(f"Pozycja: {self.pozycja}")
         print(f"Numer: {self.numer}")
         print(f"Umiejętności: {self.umiejetnosc}")
-        print(f"Kontuzjowany: {"Tak" if self.__kontuzjowany else "Nie"}")
+        print(f"Kontuzjowany: {"Tak" if self.__kontuzjowany else "Nie"}") #skrócona funkcja if w pythonie
 
     def daj_kontuzje(self):
         # na podstawie umiejętności szanse na kontuzje
@@ -57,10 +57,12 @@ class Pilkarz:
         else:
             print("Zawodnik nie jest kontuzjowany 🏋️")
 
-    
+    #zmiana reprezentacji instancji (ladniejszy wygląd) - (nic nie zmienia w funkcjonalności aplikacji)
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} imie={self.imie} pozycja={self.pozycja} numer={self.numer} umiejetnosc={self.umiejetnosc} zmeczenie={self.zmeczenie} kontuzjowany={self.__kontuzjowany}>"
+    
 
+#dziedziczenie - Klasa Bramkarz i Napastnik dziedziczy po klasie Pilkarz jej atrybuty + dodaje swoje jak refleks czy wykonczenie
 class Bramkarz(Pilkarz):
     def __init__(self, imie: str, pozycja: str, numer: int, umiejetnosc: int, refleks: int, zmeczenie: int = 0) -> None:
         self.refleks = refleks
@@ -75,7 +77,7 @@ class Napastnik(Pilkarz):
 class Druzyna:
     def __init__(self, nazwa:str, zawodnicy: list = None):
         self.nazwa = nazwa
-        self.zawodnicy = zawodnicy if zawodnicy is not None else []
+        self.zawodnicy = zawodnicy if zawodnicy is not None else [] #w pythonie lepiej nie okreslac w __init__ pustej listy wiec tutaj sprawdzamy czy zostala podana (rowniez uzyto skroconego if'a)
 
     def dodaj_zawodnika(self, zawodnik):
         self.zawodnicy.append(zawodnik)
@@ -83,11 +85,11 @@ class Druzyna:
     def usun_zawodnika(self, identyfikator: str | int):
         
         for idx, pilkarz in enumerate(self.zawodnicy):
-            if isinstance(identyfikator, str) and pilkarz.imie == identyfikator:
+            if isinstance(identyfikator, str) and pilkarz.imie == identyfikator: #sprawdza czy identyfikator jest stringiem (str) czy integerem (int)
                 self.zawodnicy.pop(idx)
                 print(f"Usunieto zawodnika o imieniu {identyfikator}")
                 return True
-            elif isinstance(identyfikator, int) and pilkarz.id == identyfikator:
+            elif isinstance(identyfikator, int) and pilkarz.id == identyfikator: #sprawdza czy identyfikator jest stringiem (str) czy integerem (int)
                 self.zawodnicy.pop(idx)
                 print(f"Usunieto zawodnika o nr: {identyfikator}")
                 return True
@@ -95,10 +97,10 @@ class Druzyna:
 
     def znajdz_zawodnika(self, identyfikator: str| int):
         for pilkarz in self.zawodnicy:
-            if isinstance(identyfikator, str) and pilkarz.imie == identyfikator:
+            if isinstance(identyfikator, str) and pilkarz.imie == identyfikator: #sprawdza czy identyfikator jest stringiem (str) czy integerem (int)
                 print(f"Znaleziono zawodnika o imieniu: {identyfikator}")
                 return True
-            elif isinstance(identyfikator, int) and pilkarz.numer == identyfikator:
+            elif isinstance(identyfikator, int) and pilkarz.numer == identyfikator: #sprawdza czy identyfikator jest stringiem (str) czy integerem (int)
                 print(f"Znaleziono zawodnika o nr: {identyfikator}")
                 return True
         return False
@@ -133,7 +135,7 @@ class Mecz:
         print(f"({self.druzyna1.nazwa}) - ({self.druzyna2.nazwa})")
 
     def rozegraj_mecz(self):
-        pkt_druzyny1 = self.policz_punkty(self.druzyna1)
+        pkt_druzyny1 = self.policz_punkty(self.druzyna1) #odwoluja sie do wlasnej funkcji w ktorej podaja druzyny pozniej podane w obiekcie
         pkt_druzyny2 = self.policz_punkty(self.druzyna2)
 
         # warunki wygranej  
