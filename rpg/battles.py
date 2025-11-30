@@ -16,7 +16,6 @@ def battle(player: Player, enemy: Enemy, allow_items_in_battle: bool = True) -> 
 
     while player.is_alive() and enemy.is_alive():
         print(f"\n--- TURA {tury} ---")
-        # apply status effects at start of turn
         player.apply_effects()
         enemy.apply_effects()
 
@@ -48,13 +47,11 @@ def battle(player: Player, enemy: Enemy, allow_items_in_battle: bool = True) -> 
             print("-----------------")
             player.check_items()
             print("-----------------")
-            # jeśli użył itemu to nie od razu kończ turę (opcjonalne)
         elif allow_items_in_battle and choice == "5":
             print("-----------------")
             player.check_stats()
             player.check_enemy(enemy)
             print("-----------------")
-            # nie przechodzimy do tury przeciwnika, zostajemy w tej turze
             continue
         elif not allow_items_in_battle and choice == "4":
             print("-----------------")
@@ -93,9 +90,6 @@ def battle(player: Player, enemy: Enemy, allow_items_in_battle: bool = True) -> 
         return False
 
 def boss_battle(player: Player, boss: Enemy) -> bool:
-    """
-    Boss fight z prostą fazą: po osiągnięciu 50% HP boss enrages (zwiększa atak).
-    """
     tury = 1
     print("---- WALKA Z BOSSEM ---")
     player.character_stats()
@@ -106,13 +100,9 @@ def boss_battle(player: Player, boss: Enemy) -> bool:
         player.apply_effects()
         boss.apply_effects()
 
-        # faza bossa
         if not boss.enraged and boss.health <= boss.health / 2:
-            # Uwaga: powyższe porównanie nie zadziała jak tu napisane (wczytasz oryginalne HP)
-            # Zamiast tego sprawdzamy procent z max (jeśli chcesz max_hp musisz dodać atrybut)
             pass
 
-        # prosty input like in battle
         print("1. Atakuj\n2. Leczenie\n3. Obrona\n4. Ekwipunek\n5. Sprawdź statystyki")
         choice = input("Wybór: ")
         print("\nTrwa ruch...")
@@ -134,8 +124,6 @@ def boss_battle(player: Player, boss: Enemy) -> bool:
             print("Nieprawidłowy wybór.")
             continue
 
-        # Boss specjalna faza: jeśli HP spadnie poniżej 50% jego początkowego (zaimplementujemy prostą metodę)
-        # Aby to działało poprawnie, zaimplementujemy prostą "max_health" property w bossie w mainie przy tworzeniu
         if hasattr(boss, "max_health") and not boss.enraged:
             if boss.health <= boss.max_health * 0.5:
                 boss.enraged = True
