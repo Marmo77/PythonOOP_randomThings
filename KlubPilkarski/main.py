@@ -31,12 +31,12 @@ class Pilkarz:
         print(f"{self.imie} zmęczneie teraz wynosi: {self.zmeczenie}")
 
     def zawodnik(self):
-        print("----------------------")
+        print("------- ZAWODNIK -------")
         print(f"Imię: {self.imie}")
         print(f"Pozycja: {self.pozycja}")
         print(f"Numer: {self.numer}")
         print(f"Umiejętności: {self.umiejetnosc}")
-        print("----------------------")
+        print(f"Kontuzjowany: {"Tak" if self.__kontuzjowany else "Nie"}")
 
     def daj_kontuzje(self):
         # na podstawie umiejętności szanse na kontuzje
@@ -44,7 +44,7 @@ class Pilkarz:
         
         if daj_kontuzje > self.umiejetnosc:
             self.__kontuzjowany = True
-            print("Zawodnik został kontuzjowany 🦴")
+            print(f"Zawodnik {self.imie} został kontuzjowany 🦴")
         else:
             self.__kontuzjowany = False
 
@@ -108,15 +108,18 @@ class Druzyna:
         for pilkarz in self.zawodnicy:
             if pilkarz.zmeczenie < 70 and not pilkarz._Pilkarz__kontuzjowany: #gotowy do gry
                 gotowy_do_gry.append(pilkarz)
-        print("-------- Gotowi Zawodnicy --------")
+        return gotowy_do_gry
+
+    def wypisz_gotowych_zawodnikow(self):
+        gotowy_do_gry = self.lista_zawodnikow_gotowych()
+        print(f"-------- Gotowi Zawodnicy {self.nazwa} --------")
         for pilkarz in gotowy_do_gry:
             print(f"{pilkarz.imie} ({pilkarz.numer}) - {pilkarz.pozycja} - gotowy")
         print("----------------------------------")
-        return gotowy_do_gry
 
     
     def raport(self):
-        print("------- Raport Druzyny ---------")
+        print(f"------- Raport Druzyny {self.nazwa} ---------")
         for pilkarz in self.zawodnicy:
             print(pilkarz)
         print("---------------------------------")
@@ -131,55 +134,104 @@ class Mecz:
 
     def rozegraj_mecz(self):
         pkt_druzyny1 = self.policz_punkty(self.druzyna1)
-        print(pkt_druzyny1)
-        # pkt_druzyny2 = policz_punkty(self.druzyna2)
-        pkt_druzyny1 = 15
-        pkt_druzyny2 = 5
-        # warunki wygranej
-        
-        if pkt_druzyny1 > pkt_druzyny2:
-            print(f"DRUZYNA {self.druzyna1.nazwa} wygrała pojedynek")
-        elif pkt_druzyny2 > pkt_druzyny1:
-            print(f"DRUZYNA {self.druzyna2.nazwa} wygrała pojedynek")
-        else:
-            print("Doszło do remisu! Gratulacje dla obu drużyn")
+        pkt_druzyny2 = self.policz_punkty(self.druzyna2)
 
+        # warunki wygranej  
+        print("--------------- MECZ SIĘ SKOŃCZYŁ ---------------")
+        if pkt_druzyny1 > pkt_druzyny2:
+            print(f"Drużyna {self.druzyna1.nazwa} wygrała mecz.")
+            print(f"{pkt_druzyny1} pkt. > {pkt_druzyny2} pkt.")
+        elif pkt_druzyny2 > pkt_druzyny1:
+            print(f"Drużyna {self.druzyna2.nazwa} wygrała mecz.")
+            print(f"{pkt_druzyny2} pkt. > {pkt_druzyny1} pkt.")
+        else:
+            print("Doszło do remisu! Gratulacje dla obu drużyn.")
+        print("------------------------------------------------")
+
+    #liczenie punktów na bazie umiejętności zawodników i poziomu zmęczenia
     def policz_punkty(self, druzyna):
         punkty: int = 0
-        print(druzyna)
-        for pilkarz in druzyna.zawodnicy:
+        for pilkarz in druzyna.lista_zawodnikow_gotowych(): #tylko nie kontuzjowani i ktorych poziom ponizej < 70 zmeczenia
             punkty += pilkarz.umiejetnosc
             punkty -= (pilkarz.zmeczenie // 2)
-
         return punkty
 
 
-lewy = Napastnik("Lewy", "Napad", 9, 86, 99, 80)
-prawy = Pilkarz("Prawy", "Skrzydło", 12, 99, 25)
-baks = Bramkarz("Bravos", "Bramkarz", 99, 76, 78, 15)
-
-# lewy.podnies_umiejetniosc()
-# lewy.wycieczenie(5)
-# lewy.zawodnik()
-# lewy.daj_kontuzje()
-# lewy.sprawdz_kontuzje()
-# print(lewy)
 
 
-zespol = [lewy, prawy, baks]
 
-druzyna = Druzyna("Barca")
-druzyna2 = Druzyna("Messia")
+#tworzenie klubów (druzyn)
+barca = Druzyna("Barca")
+mesierra = Druzyna("Messiara")
 
-druzyna.zawodnicy.extend(zespol)
-druzyna2.zawodnicy.extend(zespol)
+zawodnicy_barca = [
+    Bramkarz("Barks", "Bramkarz", 1, 80, refleks=88),
+    Napastnik("Lewando", "Napastnik", 9, 91, wykonczenie=95),
 
-# druzyna.pokaz_druzyne()
-print("------------------")
-druzyna.lista_zawodnikow_gotowych()
+    Pilkarz("Garcia", "Obrońca", 2, 76, 20),
+    Pilkarz("Mendes", "Obrońca", 3, 79, 10),
+    Pilkarz("Arujo", "Obrońca", 4, 83, 30),
+    Pilkarz("Balde", "Obrońca", 5, 78, 15),
 
-druzyna.raport()
+    Pilkarz("Gavi", "Pomocnik", 6, 85, 20),
+    Pilkarz("Pedri", "Pomocnik", 8, 87, 25),
+    Pilkarz("De Jong", "Pomocnik", 21, 88, 35),
 
-mecz = Mecz(druzyna, druzyna2)
+    Pilkarz("Ferran", "Skrzydło", 11, 82, 40),
+    Pilkarz("Yamalando", "Skrzydło", 27, 86, 18),
+]
+#DOdaj zawodników do drużyna Barca
+for z in zawodnicy_barca:
+    barca.dodaj_zawodnika(z)
 
-mecz.rozegraj_mecz()
+
+zawodnicy_mesierra = [
+
+    Bramkarz("Ortez", "Bramkarz", 1, 78, refleks=83),
+
+    Napastnik("Kiros", "Napastnik", 10, 88, wykonczenie=93),
+
+    Pilkarz("Ramos", "Obrońca", 3, 80, 25),
+    Pilkarz("Silva", "Obrońca", 4, 77, 10),
+    Pilkarz("Piquez", "Obrońca", 5, 79, 30),
+    Pilkarz("Vargas", "Obrońca", 15, 72, 15),
+
+    Pilkarz("Moralez", "Pomocnik", 6, 82, 20),
+    Pilkarz("Tevez", "Pomocnik", 7, 84, 10),
+    Pilkarz("Rico", "Pomocnik", 17, 80, 35),
+
+    Pilkarz("Santos", "Skrzydło", 11, 83, 25),
+    Pilkarz("Mora", "Skrzydło", 22, 81, 18),
+]
+
+print("------------- KONTUZJE ---------------")
+#skontuzjuj zawodnika (przechodzi przez kazdego zawodnika z obu klubow i losowo kontuzjuje z losowania)
+for z in zawodnicy_barca:
+    z.daj_kontuzje()
+for z in zawodnicy_mesierra:
+    z.daj_kontuzje()
+
+
+print("--------- ZAWODNICY ZESPOLOW -----------")
+print(f"---- Drużyna {barca.nazwa} ----")
+for z in zawodnicy_barca:
+    z.zawodnik()
+print("---------------")
+print(f"---- Drużyna {mesierra.nazwa} ----")
+for z in zawodnicy_mesierra:
+    z.zawodnik()
+print("---------------")
+#dodaj zawodników do Drużyny Mesierra
+for z in zawodnicy_mesierra:
+    mesierra.dodaj_zawodnika(z)
+
+#Wypisuje raport do każdego zawodnika
+zespoly = [barca, mesierra]
+for zes in zespoly:
+    # zes.raport() #raport lub wypisanie gotowych zawodnikow
+    zes.wypisz_gotowych_zawodnikow()
+
+
+
+mecz1 = Mecz(barca, mesierra)
+mecz1.rozegraj_mecz()
