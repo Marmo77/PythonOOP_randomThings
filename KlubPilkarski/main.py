@@ -13,7 +13,7 @@ class Pilkarz:
         self.zmeczenie = zmeczenie
 
     def podnies_umiejetniosc(self):
-        rand_skill = random.randint(5,15)
+        rand_skill = random.randint(1,5)
         print(f"Podnoszenie umiejętności o {rand_skill}")
         self.umiejetnosc += rand_skill
         if int(self.umiejetnosc) > 100:
